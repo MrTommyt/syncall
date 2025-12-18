@@ -305,6 +305,26 @@ class AsanaRawTask(TypedDict):
     modified_at: str
 
 
+# ---------------------------------------------------------------------------------------------
+# ClickUp
+ClickUpID = ID
+
+
+# Task as returned from ClickUp API.
+class ClickUpRawTask(TypedDict, total=False):
+    """Task as returned from ClickUp API."""
+
+    id: ClickUpID
+    name: str
+    status: Union[str, Dict[str, Any]]
+    date_created: str
+    date_updated: str
+    date_closed: str | None
+    due_date: str | None
+    description: str | None
+    content: str | None
+
+
 # Extras --------------------------------------------------------------------------------------
 # Task as returned from get_task(id=...)
 TwRawItem = Tuple[Optional[int], Dict[str, Any]]

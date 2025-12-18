@@ -75,6 +75,11 @@ At the moment the list of supported synchronizations is the following:
     <td><tt>tw-asana-sync</tt></td>
   </tr>
   <tr>
+    <td><a href="https://github.com/bergercookie/syncall/blob/master/docs/readme-tw-clickup.md">README</a></td>
+    <td> <a href="https://taskwarrior.org/">Taskwarrior</a> ⬄ <a href="https://clickup.com">ClickUp Tasks</a></td>
+    <td><tt>tw-clickup-sync</tt></td>
+  </tr>
+  <tr>
     <td><a href="https://github.com/bergercookie/syncall/blob/master/docs/readme-tw-caldav.md">README</a></td>
     <td> <a href="https://taskwarrior.org/">Taskwarrior</a> ⬄ Generic <a href="https://en.wikipedia.org/wiki/CalDAV">Caldav </a> server</td>
     <td><tt>tw-caldav-sync</tt></td>
@@ -143,6 +148,9 @@ You have to specify at least one extra. To do so use the `[]` syntax in pip:
 ```sh
 # for installing integration with google (e.g. Google Keep / Calendar) and Notion
 pip3 install syncall[notion,google]
+
+# for installing ClickUp integration
+pip3 install syncall[clickup,tw]
 ```
 
 Here's some of the available options for installing it:
@@ -165,7 +173,7 @@ Here's some of the available options for installing it:
   git clone https://github.com/bergercookie/syncall
   cd syncall
   git checkout devel
-  pip3 install --user --upgrade .[gkeep,fs,google,tw,caldav,asana]
+  pip3 install --user --upgrade .[gkeep,fs,google,tw,caldav,asana,clickup]
   ```
 
 - Setup using [poetry](https://python-poetry.org/) - handy for local
@@ -390,6 +398,43 @@ Options:
   --list-combinations             List the available named TW<->Asana
                                   combinations
   -s, --save-as TEXT              Save the given TW<->Asana filters
+                                  combination using a specified custom name.
+  -v, --verbose
+  --version                       Show the version and exit.
+  --help                          Show this message and exit.
+
+```
+
+</details>
+
+<!-- END sniff-and-replace -->
+<!-- START sniff-and-replace tw_clickup_sync --help START -->
+
+<details>
+ <summary><tt>tw_clickup_sync --help</tt></summary>
+
+```
+Usage: tw_clickup_sync [OPTIONS]
+
+  Synchronize your tasks in ClickUp with filters from Taskwarrior.
+
+Options:
+  --token, --token-pass-path TEXT
+                                  Path in the UNIX password manager to fetch
+                                  ClickUp API token
+  -l, --clickup-list-id TEXT      ClickUp list ID to synchronize
+  -w, --clickup-team-id TEXT      ClickUp team/workspace ID
+  --list-clickup-teams            List the available ClickUp teams/workspaces
+  --list-clickup-lists            List the available ClickUp lists
+  -t, --taskwarrior-tags TEXT     Taskwarrior tags to synchronize
+  -p, --tw-project TEXT           Taskwarrior project to synchronize
+  -r, --resolution-strategy [MostRecentRS|LeastRecentRS|AlwaysFirstRS|AlwaysSecondRS]
+                                  Resolution strategy to use during conflicts
+  -b, --combination TEXT          Name of an already saved TW<->ClickUp
+                                  combination
+  --list-combinations             List the available named TW<->ClickUp
+                                  combinations
+  -s, --save-as TEXT              Save the given TW<->ClickUp filters
                                   combination using a specified custom name.
   -v, --verbose
   --version                       Show the version and exit.

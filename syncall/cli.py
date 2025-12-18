@@ -138,6 +138,95 @@ def _opt_list_asana_workspaces():
     )
 
 
+# clickup related options ---------------------------------------------------------------------
+def opts_clickup():
+    def decorator(f):
+        for d in reversed(
+            [
+                _opt_clickup_token_pass_path,
+                _opt_clickup_list_id,
+                _opt_clickup_team_id,
+                _opt_list_clickup_teams,
+                _opt_list_clickup_lists,
+            ],
+        ):
+            f = d()(f)
+        return f
+
+    return decorator
+
+
+def _opt_clickup_token_pass_path():
+    def callback(ctx, param, value):
+        del ctx
+
+        api_token_pass_path = value
+
+        # fetch API token to connect to ClickUp
+        clickup_token = os.environ.get("CLICKUP_API_TOKEN")
+
+        if clickup_token is None and api_token_pass_path is None:
+            error_and_exit(
+                "You must provide a ClickUp API token, using the"
+                f" {'/'.join(param.opts)} option or CLICKUP_API_TOKEN environment variable",
+            )
+        if clickup_token is not None:
+            logger.debug(
+                "Reading the ClickUp API token from environment variable...",
+            )
+        else:
+            clickup_token = fetch_from_pass_manager(api_token_pass_path)
+
+        return clickup_token
+
+    return click.option(
+        "--token",
+        "--token-pass-path",
+        "clickup_token",
+        help="Path in the UNIX password manager to fetch ClickUp API token",
+        expose_value=True,
+        callback=callback,
+    )
+
+
+def _opt_clickup_list_id():
+    return click.option(
+        "-l",
+        "--clickup-list-id",
+        "clickup_list_id",
+        type=str,
+        help="ClickUp list ID to synchronize",
+    )
+
+
+def _opt_clickup_team_id():
+    return click.option(
+        "-w",
+        "--clickup-team-id",
+        "clickup_team_id",
+        type=str,
+        help="ClickUp team/workspace ID",
+    )
+
+
+def _opt_list_clickup_teams():
+    return click.option(
+        "--list-clickup-teams",
+        "do_list_clickup_teams",
+        is_flag=True,
+        help="List the available ClickUp teams/workspaces",
+    )
+
+
+def _opt_list_clickup_lists():
+    return click.option(
+        "--list-clickup-lists",
+        "do_list_clickup_lists",
+        is_flag=True,
+        help="List the available ClickUp lists",
+    )
+
+
 # taskwarrior options -------------------------------------------------------------------------
 def opts_tw_filtering():
     def decorator(f):
