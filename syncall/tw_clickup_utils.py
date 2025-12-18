@@ -143,14 +143,10 @@ def convert_clickup_to_tw(clickup_task: ClickUpTask) -> TwItem:  # noqa: C901, P
         "status": tw_status,
         "entry": tw_entry,
         "modified": tw_modified,
-        "due": None,
         "end": tw_end,
     }
 
     if tw_due is not None:
         tw_task["due"] = tw_due
-
-    if tw_modified is not None:
-        tw_task["modified"] = tw_modified
 
     return tw_task
