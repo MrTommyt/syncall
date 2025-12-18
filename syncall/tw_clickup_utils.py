@@ -2,7 +2,6 @@
 
 import datetime
 
-import dateutil
 from bubop import parse_datetime
 
 from syncall.clickup.clickup_task import ClickUpTask
@@ -11,12 +10,13 @@ from syncall.types import TwItem
 
 def convert_tw_to_clickup(tw_item: TwItem) -> ClickUpTask:
     """Convert a Taskwarrior item to a ClickUp task.
-    
+
     Args:
         tw_item: The Taskwarrior item to convert
-        
+
     Returns:
         A ClickUpTask object
+
     """
     # Extract Taskwarrior fields
     tw_description = tw_item["description"]
@@ -79,14 +79,15 @@ def convert_tw_to_clickup(tw_item: TwItem) -> ClickUpTask:
     )
 
 
-def convert_clickup_to_tw(clickup_task: ClickUpTask) -> TwItem:
+def convert_clickup_to_tw(clickup_task: ClickUpTask) -> TwItem:  # noqa: C901, PLR0912
     """Convert a ClickUp task to a Taskwarrior item.
-    
+
     Args:
         clickup_task: The ClickUp task to convert
-        
+
     Returns:
         A Taskwarrior item dictionary
+
     """
     # Extract ClickUp fields
     cu_name = clickup_task["name"]
@@ -95,7 +96,6 @@ def convert_clickup_to_tw(clickup_task: ClickUpTask) -> TwItem:
     cu_date_updated = clickup_task["date_updated"]
     cu_date_closed = clickup_task["date_closed"]
     cu_due_date = clickup_task["due_date"]
-    cu_description = clickup_task["description"]
 
     # Declare Taskwarrior fields
     tw_description = None

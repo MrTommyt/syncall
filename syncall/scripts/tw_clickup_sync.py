@@ -42,7 +42,7 @@ from syncall.tw_clickup_utils import convert_clickup_to_tw, convert_tw_to_clicku
 @opts_clickup()
 @opts_tw_filtering()
 @opts_miscellaneous("TW", "ClickUp")
-def main(  # noqa: PLR0915, C901, PLR0912
+def main(
     clickup_token: str,
     clickup_list_id: str,
     clickup_team_id: str,
@@ -108,7 +108,7 @@ def main(  # noqa: PLR0915, C901, PLR0912
     if do_list_clickup_lists:
         if not clickup_team_id:
             error_and_exit(
-                "You must provide a ClickUp team ID using --clickup-team-id to list lists"
+                "You must provide a ClickUp team ID using --clickup-team-id to list lists",
             )
         list_clickup_lists(clickup_client, clickup_team_id)
         return 0

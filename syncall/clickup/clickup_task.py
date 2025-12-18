@@ -6,8 +6,6 @@ import datetime
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Mapping
 
-from bubop import parse_datetime
-
 if TYPE_CHECKING:
     from syncall.types import ClickUpID, ClickUpRawTask
 
@@ -48,7 +46,7 @@ class ClickUpTask(Mapping):
         return len(self._key_names)
 
     @classmethod
-    def from_raw_task(cls, raw_task: ClickUpRawTask) -> ClickUpTask:
+    def from_raw_task(cls, raw_task: ClickUpRawTask) -> ClickUpTask:  # noqa: PLR0912
         """Create a ClickUpTask from a raw task dictionary."""
         assert "name" in raw_task
         assert "status" in raw_task
@@ -57,7 +55,7 @@ class ClickUpTask(Mapping):
         assert "id" in raw_task
 
         name = raw_task["name"]
-        
+
         # Status can be a dict or string
         if isinstance(raw_task["status"], dict):
             status = raw_task["status"].get("status", "")
@@ -129,23 +127,17 @@ class ClickUpTask(Mapping):
 
         if self.date_created is not None:
             # Convert to milliseconds timestamp
-            raw_task["date_created"] = str(
-                int(self.date_created.timestamp() * 1000)
-            )
+            raw_task["date_created"] = str(int(self.date_created.timestamp() * 1000))
         else:
             raw_task["date_created"] = None
 
         if self.date_updated is not None:
-            raw_task["date_updated"] = str(
-                int(self.date_updated.timestamp() * 1000)
-            )
+            raw_task["date_updated"] = str(int(self.date_updated.timestamp() * 1000))
         else:
             raw_task["date_updated"] = None
 
         if self.date_closed is not None:
-            raw_task["date_closed"] = str(
-                int(self.date_closed.timestamp() * 1000)
-            )
+            raw_task["date_closed"] = str(int(self.date_closed.timestamp() * 1000))
         else:
             raw_task["date_closed"] = None
 
